@@ -1,0 +1,60 @@
+<div class='container'><br><center>
+
+<br><br><br><br>
+    <div class="well well-sm"><br>
+<%= render partial: "vote_form", locals: { votable: @question, vote_boolean: true, new_vote: @vote, up_down: "upvote" } %>
+  
+  <h2 style="color:red">
+    <%= @question.score %></h2><h2>
+  
+    <%= @question.title %>
+  </h2>
+  
+
+
+<%= render partial: "vote_form", locals: { votable: @question, vote_boolean: false, new_vote: @vote, up_down: "downvote" } %><br>
+
+<strong><%= @question.content %></strong><br><br>
+
+</div>
+
+
+<%= render partial: "add_answer_button", locals: { question: @question } %><br>
+
+    <div class="well well-sm"><br>
+
+<% @question.comments.each do |comment| %>
+  <%= comment.content %><br>
+<% end %>
+<%= render partial: "comment_button", locals: { commentable: @question } %>
+</div>
+
+<% @answers.each_slice(1) do |answer_row| 
+answer_row.each do |answer| %>
+    <div class="well well-sm"><br>
+
+  <%= render partial: "best_answer_button", locals: { question: @question, answer_id: answer.id } %>
+
+  <% if best_answer?(@question, answer.id) %>
+    <h4>User Chosen Best Answer!</h4>
+  <% end %>
+  
+  <%= render partial: "vote_form", locals: { votable: answer, vote_boolean: true, new_vote: @vote, up_down: "upvote" } %>
+  <div><br>
+    <h5 style="color:red"><%= answer.score %></h5>
+  </div>
+
+  <%= render partial: "vote_form", locals: { votable: answer, vote_boolean: false, new_vote: @vote, up_down: "downvote" } %>
+  <br>
+    <strong><%= answer.content %></strong>
+
+  <% answer.comments.each do |comment| %>
+    <%= comment.content %><br>
+  <% end %><br>
+
+  <%= render partial: "comment_button", locals: { commentable: answer } %>
+</div>
+<% end %>
+<% end %>
+</center>
+</div>
