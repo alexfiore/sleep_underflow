@@ -59,3 +59,5 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # gem 'debugger'
 
 ruby '2.0.0'
+
+gem 'newrelic_rpm'
